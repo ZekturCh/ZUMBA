@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ZUMBA | Admin QR</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="admin-shell">
+      <section id="loginPanel" class="panel">
+        <p class="eyebrow">Panel admin</p>
+        <h1>Control de codigos</h1>
+        <input id="emailInput" class="input" type="email" autocomplete="email" placeholder="Correo admin">
+        <input id="passwordInput" class="input" type="password" autocomplete="current-password" placeholder="Clave">
+        <button id="loginButton" class="primary" type="button">Entrar</button>
+        <p id="loginStatus" class="status"></p>
+      </section>
+
+      <section id="adminPanel" class="panel wide hidden">
+        <div class="admin-header">
+          <div>
+            <p class="eyebrow">ZUMBA</p>
+            <h1>Codigos QR</h1>
+          </div>
+          <button id="logoutButton" class="secondary" type="button">Salir</button>
+        </div>
+
+        <div class="stats">
+          <span id="totalCount">Total: 0</span>
+          <span id="validCount">Validados: 0</span>
+          <span id="freeCount">Disponibles: 0</span>
+        </div>
+
+        <div class="toolbar">
+          <input id="searchInput" class="input" type="search" placeholder="Buscar codigo">
+          <select id="filterInput" class="input">
+            <option value="all">Todos</option>
+            <option value="free">Disponibles</option>
+            <option value="validated">Validados</option>
+          </select>
+        </div>
+
+        <div id="codesList" class="codes-list"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./admin.js"></script>
+  </body>
+</html>

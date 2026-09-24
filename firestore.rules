@@ -1,0 +1,33 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in [
+          "CAMBIA-ESTE-CORREO@tudominio.com"
+        ];
+    }
+
+    match /codes/{code} {
+      allow get: if code.matches('^[A-Z0-9]{5}$');
+      allow list: if isAdmin();
+      allow create: if false;
+      allow delete: if false;
+
+      allow update: if (
+        isAdmin()
+        ||
+        (
+          resource.data.validated == false
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+            "validated",
+            "validatedAt",
+            "userAgent"
+          ])
+          && request.resource.data.validated == true
+        )
+      );
+    }
+  }
+}
