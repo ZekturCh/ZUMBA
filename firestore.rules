@@ -2,22 +2,13 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    function isAdmin() {
-      return request.auth != null
-        && request.auth.token.email in [
-          "CAMBIA-ESTE-CORREO@tudominio.com"
-        ];
-    }
-
     match /codes/{code} {
       allow get: if code.matches('^[A-Z0-9]{5}$');
-      allow list: if isAdmin();
+      allow list: if true;
       allow create: if false;
       allow delete: if false;
 
       allow update: if (
-        isAdmin()
-        ||
         (
           resource.data.validated != true
           && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
@@ -28,6 +19,40 @@ service cloud.firestore {
           && request.resource.data.status == "reserved"
           && request.resource.data.guestName is string
           && request.resource.data.guestName.size() <= 60
+        )
+        ||
+        (
+          resource.data.status == "free"
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+            "status",
+            "sentAt"
+          ])
+          && request.resource.data.status == "sent"
+        )
+        ||
+        (
+          resource.data.validated != true
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+            "status",
+            "validated",
+            "validatedAt"
+          ])
+          && request.resource.data.status == "validated"
+          && request.resource.data.validated == true
+        )
+        ||
+        (
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+            "status",
+            "validated",
+            "validatedAt",
+            "guestName",
+            "reservedAt",
+            "sentAt",
+            "resetAt"
+          ])
+          && request.resource.data.status == "free"
+          && request.resource.data.validated == false
         )
       );
     }

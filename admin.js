@@ -9,20 +9,12 @@ import {
   updateDoc,
   writeBatch
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-import {
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-import { auth, db } from "./firebase-config.js";
+import { db } from "./firebase-config.js";
 
-const loginPanel = document.querySelector("#loginPanel");
+const STAFF_KEY = "nRnkKAw9f5ARaFbik68Jhn2u";
+
+const privatePanel = document.querySelector("#privatePanel");
 const adminPanel = document.querySelector("#adminPanel");
-const emailInput = document.querySelector("#emailInput");
-const passwordInput = document.querySelector("#passwordInput");
-const loginButton = document.querySelector("#loginButton");
-const logoutButton = document.querySelector("#logoutButton");
-const loginStatus = document.querySelector("#loginStatus");
 const totalCount = document.querySelector("#totalCount");
 const validCount = document.querySelector("#validCount");
 const freeCount = document.querySelector("#freeCount");
@@ -47,6 +39,7 @@ let codes = [];
 let unsubscribeCodes = null;
 let scanner = null;
 let currentScanCode = "";
+const hasStaffAccess = new URLSearchParams(window.location.search).get("k") === STAFF_KEY;
 
 function getStatus(item) {
   if (item.status) return item.status;
@@ -147,8 +140,7 @@ async function copySpecificCodes(selected) {
   selected.forEach((item) => {
     batch.update(doc(db, "codes", item.code), {
       status: "sent",
-      sentAt: serverTimestamp(),
-      sentBy: auth.currentUser?.email || null
+      sentAt: serverTimestamp()
     });
   });
   await batch.commit();
@@ -235,8 +227,7 @@ async function validateCurrentCode() {
       transaction.update(ref, {
         status: "validated",
         validated: true,
-        validatedAt: serverTimestamp(),
-        validatedBy: auth.currentUser?.email || null
+        validatedAt: serverTimestamp()
       });
     });
 
@@ -258,17 +249,6 @@ function setTab(tab) {
   validatePanel.classList.toggle("hidden", isSend);
 }
 
-loginButton.addEventListener("click", async () => {
-  loginStatus.textContent = "Entrando...";
-  try {
-    await signInWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value);
-    loginStatus.textContent = "";
-  } catch {
-    loginStatus.textContent = "No se pudo entrar. Revisa correo y clave.";
-  }
-});
-
-logoutButton.addEventListener("click", () => signOut(auth));
 searchInput.addEventListener("input", render);
 filterInput.addEventListener("change", render);
 sendTab.addEventListener("click", () => setTab("send"));
@@ -301,12 +281,9 @@ codesList.addEventListener("click", async (event) => {
   await resetCode(resetButton.dataset.reset);
 });
 
-onAuthStateChanged(auth, async (user) => {
-  loginPanel.classList.toggle("hidden", Boolean(user));
-  adminPanel.classList.toggle("hidden", !user);
-  if (user) {
-    watchCodes();
-    return;
-  }
-  if (unsubscribeCodes) unsubscribeCodes();
-});
+if (hasStaffAccess) {
+  adminPanel.classList.remove("hidden");
+  watchCodes();
+} else {
+  privatePanel.classList.remove("hidden");
+}

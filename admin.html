@@ -8,13 +8,10 @@
   </head>
   <body>
     <main class="admin-shell">
-      <section id="loginPanel" class="panel">
-        <p class="eyebrow">Panel staff</p>
-        <h1>QR ZUMBA</h1>
-        <input id="emailInput" class="input" type="email" autocomplete="email" placeholder="Correo">
-        <input id="passwordInput" class="input" type="password" autocomplete="current-password" placeholder="Clave">
-        <button id="loginButton" class="primary" type="button">Entrar</button>
-        <p id="loginStatus" class="status"></p>
+      <section id="privatePanel" class="panel hidden">
+        <p class="eyebrow">Panel privado</p>
+        <h1>Link no valido</h1>
+        <p class="status danger">Este panel solo funciona con el link privado del staff.</p>
       </section>
 
       <section id="adminPanel" class="panel wide hidden">
@@ -23,7 +20,6 @@
             <p class="eyebrow">ZUMBA</p>
             <h1>Enviar y validar QR</h1>
           </div>
-          <button id="logoutButton" class="secondary" type="button">Salir</button>
         </div>
 
         <div class="stats">
