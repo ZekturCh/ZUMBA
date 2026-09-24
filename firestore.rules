@@ -42,6 +42,8 @@ service cloud.firestore {
         )
         ||
         (
+          resource.data.status == "sent"
+          &&
           request.resource.data.diff(resource.data).affectedKeys().hasOnly([
             "status",
             "validated",

@@ -105,7 +105,7 @@ function render() {
         <div class="row-actions">
           <button class="secondary" type="button" data-copy-one="${item.code}" ${status !== "free" ? "disabled" : ""}>Copiar</button>
           <a class="secondary link-button" href="./?c=${item.code}" target="_blank" rel="noopener">Abrir</a>
-          <button class="secondary" type="button" data-reset="${item.code}">Reset</button>
+          <button class="secondary" type="button" data-reset="${item.code}" ${status !== "sent" ? "disabled" : ""}>Reset</button>
         </div>
       </article>
     `;
@@ -277,6 +277,8 @@ codesList.addEventListener("click", async (event) => {
 
   const resetButton = event.target.closest("[data-reset]");
   if (!resetButton) return;
+  const item = codes.find((entry) => entry.code === resetButton.dataset.reset);
+  if (!item || getStatus(item) !== "sent") return;
   resetButton.disabled = true;
   await resetCode(resetButton.dataset.reset);
 });
