@@ -24,7 +24,10 @@ body {
   min-height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
   color: var(--ink);
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 22% 0%, rgba(255, 210, 38, 0.22), transparent 28%),
+    radial-gradient(circle at 88% 12%, rgba(6, 71, 184, 0.1), transparent 22%),
+    linear-gradient(135deg, #fff8ed 0%, #fff2df 48%, #fff9ef 100%);
 }
 
 .ticket-page {
@@ -65,15 +68,37 @@ body {
 
 .admin-shell {
   align-items: start;
+  position: relative;
+}
+
+.admin-shell::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background:
+    linear-gradient(90deg, rgba(201, 8, 18, 0.1), rgba(255, 210, 38, 0.11), rgba(6, 71, 184, 0.08)),
+    url("./assets/bg.webp") center / cover no-repeat;
+  opacity: 0.18;
 }
 
 .panel {
+  overflow: hidden;
+  position: relative;
   width: min(100%, 420px);
   padding: 28px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: var(--panel);
+  background: rgba(255, 255, 255, 0.94);
   box-shadow: 0 18px 60px rgba(32, 29, 29, 0.13);
+}
+
+.panel::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 7px;
+  content: "";
+  background: linear-gradient(90deg, var(--peru-red), #ffffff 28%, var(--colombia-yellow) 50%, var(--colombia-blue) 72%, var(--colombia-red));
 }
 
 .ticket-card {
@@ -128,7 +153,7 @@ body {
 }
 
 .wide {
-  width: min(100%, 920px);
+  width: min(100%, 980px);
 }
 
 .hidden {
@@ -281,8 +306,19 @@ button:disabled {
 .stats {
   justify-content: flex-start;
   margin: 18px 0;
-  color: var(--muted);
+  color: var(--ink);
   font-weight: 700;
+}
+
+.stats span {
+  display: inline-grid;
+  min-height: 36px;
+  place-items: center;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 210, 38, 0.5);
+  border-radius: 6px;
+  background: linear-gradient(180deg, #ffffff, #fff8e4);
+  box-shadow: 0 8px 18px rgba(151, 11, 11, 0.07);
 }
 
 .tabs,
@@ -296,18 +332,19 @@ button:disabled {
 .tab {
   min-height: 40px;
   padding: 0 14px;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(151, 11, 11, 0.2);
   border-radius: 6px;
   color: var(--ink);
-  background: #ffffff;
+  background: linear-gradient(180deg, #ffffff, #fff7e2);
   font-weight: 700;
   cursor: pointer;
 }
 
 .tab.active {
   color: #ffffff;
-  border-color: var(--accent);
-  background: var(--accent);
+  border-color: var(--peru-red);
+  background: linear-gradient(135deg, var(--peru-red), var(--colombia-red));
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.16);
 }
 
 .codes-list {
@@ -324,6 +361,8 @@ button:disabled {
   padding: 12px;
   border: 1px solid var(--line);
   border-radius: 6px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 8px 18px rgba(32, 29, 29, 0.05);
 }
 
 .code-row strong {
@@ -344,16 +383,18 @@ button:disabled {
 }
 
 .code-row.sent {
-  background: #fffaf0;
+  border-color: rgba(255, 210, 38, 0.72);
+  background: linear-gradient(90deg, rgba(255, 210, 38, 0.24), #ffffff 42%);
 }
 
 .code-row.reserved {
-  background: #f0fdf4;
+  border-color: rgba(8, 116, 67, 0.28);
+  background: linear-gradient(90deg, rgba(8, 116, 67, 0.12), #ffffff 42%);
 }
 
 .code-row.validated {
   border-color: rgba(180, 35, 24, 0.4);
-  background: #fff7f5;
+  background: linear-gradient(90deg, rgba(201, 8, 18, 0.12), #ffffff 42%);
 }
 
 .row-actions {
@@ -367,9 +408,10 @@ button:disabled {
   width: min(100%, 420px);
   min-height: 260px;
   margin: 18px auto;
-  border: 1px solid var(--line);
+  border: 3px solid var(--colombia-yellow);
   border-radius: 8px;
   background: #ffffff;
+  box-shadow: 0 12px 28px rgba(151, 11, 11, 0.12);
 }
 
 .scan-result {
