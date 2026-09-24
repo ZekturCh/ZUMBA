@@ -3,18 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ZUMBA | Validacion QR</title>
+    <title>ZUMBA | QR unico</title>
     <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
     <main class="shell">
       <section class="panel">
         <p class="eyebrow">ZUMBA</p>
-        <h1>Validacion de entrada</h1>
+        <h1>QR de uso unico</h1>
         <p id="codeLabel" class="code">Cargando...</p>
         <div id="qr" class="qr" aria-label="QR del codigo"></div>
         <p id="status" class="status">Revisando codigo.</p>
-        <button id="validateButton" class="primary" type="button" disabled>Validar QR</button>
+        <input id="guestNameInput" class="input hidden" type="text" maxlength="60" placeholder="Nombre opcional">
+        <button id="reserveButton" class="primary" type="button" disabled>Confirmar asistencia</button>
       </section>
     </main>
 

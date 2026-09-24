@@ -16,6 +16,7 @@ seedButton.addEventListener("click", async () => {
         code,
         created: true,
         createdAt: serverTimestamp(),
+        status: "free",
         validated: false,
         validatedAt: null
       });

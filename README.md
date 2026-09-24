@@ -4,8 +4,8 @@ Sitio estatico para validar 300 codigos QR de un solo uso con Firebase Firestore
 
 ## Paginas
 
-- `index.html?c=CODIGO`: valida un codigo publico.
-- `admin.html`: panel protegido por Firebase Auth para ver y resetear codigos.
+- `index.html?c=CODIGO`: pagina del invitado para ver QR unico y separar asistencia.
+- `admin.html`: panel protegido por Firebase Auth para enviar QR, ver estados en tiempo real y validar por camara.
 - `seed.html`: crea los 300 codigos una sola vez. Usar solo con reglas temporales.
 
 ## Configuracion Firebase
@@ -16,6 +16,13 @@ Sitio estatico para validar 300 codigos QR de un solo uso con Firebase Firestore
 4. Para cargar codigos por primera vez, publica temporalmente `firestore.seed.rules`.
 5. Abre `seed.html`, presiona "Crear codigos".
 6. Vuelve inmediatamente a publicar `firestore.rules`.
+
+## Estados
+
+- `free`: libre.
+- `sent`: enviado por promotor.
+- `reserved`: separado/confirmado por invitado.
+- `validated`: validado en puerta.
 
 ## Links de QR
 

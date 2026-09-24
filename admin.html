@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ZUMBA | Admin QR</title>
+    <title>ZUMBA | QR</title>
     <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
     <main class="admin-shell">
       <section id="loginPanel" class="panel">
-        <p class="eyebrow">Panel admin</p>
-        <h1>Control de codigos</h1>
-        <input id="emailInput" class="input" type="email" autocomplete="email" placeholder="Correo admin">
+        <p class="eyebrow">Panel staff</p>
+        <h1>QR ZUMBA</h1>
+        <input id="emailInput" class="input" type="email" autocomplete="email" placeholder="Correo">
         <input id="passwordInput" class="input" type="password" autocomplete="current-password" placeholder="Clave">
         <button id="loginButton" class="primary" type="button">Entrar</button>
         <p id="loginStatus" class="status"></p>
@@ -21,30 +21,59 @@
         <div class="admin-header">
           <div>
             <p class="eyebrow">ZUMBA</p>
-            <h1>Codigos QR</h1>
+            <h1>Enviar y validar QR</h1>
           </div>
           <button id="logoutButton" class="secondary" type="button">Salir</button>
         </div>
 
         <div class="stats">
           <span id="totalCount">Total: 0</span>
+          <span id="freeCount">Libres: 0</span>
+          <span id="sentCount">Enviados: 0</span>
+          <span id="reservedCount">Separados: 0</span>
           <span id="validCount">Validados: 0</span>
-          <span id="freeCount">Disponibles: 0</span>
         </div>
 
-        <div class="toolbar">
-          <input id="searchInput" class="input" type="search" placeholder="Buscar codigo">
-          <select id="filterInput" class="input">
-            <option value="all">Todos</option>
-            <option value="free">Disponibles</option>
-            <option value="validated">Validados</option>
-          </select>
+        <div class="tabs" role="tablist">
+          <button id="sendTab" class="tab active" type="button">Enviar QR</button>
+          <button id="validateTab" class="tab" type="button">Validar QR</button>
         </div>
 
-        <div id="codesList" class="codes-list"></div>
+        <section id="sendPanel">
+          <p class="status">Copia 1, 5 o 10 QR libres. Al copiarlos pasan a estado enviado en tiempo real para todos los promotores.</p>
+          <div class="toolbar">
+            <input id="searchInput" class="input" type="search" placeholder="Buscar codigo">
+            <select id="filterInput" class="input">
+              <option value="all">Todos</option>
+              <option value="free">Libres</option>
+              <option value="sent">Enviados</option>
+              <option value="reserved">Separados</option>
+              <option value="validated">Validados</option>
+            </select>
+          </div>
+          <div class="copy-actions">
+            <button class="primary compact" type="button" data-copy-count="1">Copiar 1 libre</button>
+            <button class="primary compact" type="button" data-copy-count="5">Copiar 5 libres</button>
+            <button class="primary compact" type="button" data-copy-count="10">Copiar 10 libres</button>
+          </div>
+          <p id="copyStatus" class="status"></p>
+          <div id="codesList" class="codes-list"></div>
+        </section>
+
+        <section id="validatePanel" class="hidden">
+          <p class="status">Abre la camara, apunta al QR y confirma la entrada. Los datos se precargan en segundo plano para responder rapido.</p>
+          <button id="startScannerButton" class="primary" type="button">Abrir camara</button>
+          <div id="reader" class="reader"></div>
+          <div id="scanResult" class="scan-result hidden">
+            <p id="scanCode" class="code small"></p>
+            <p id="scanStatus" class="status"></p>
+            <button id="confirmValidationButton" class="primary" type="button">Validar entrada</button>
+          </div>
+        </section>
       </section>
     </main>
 
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <script type="module" src="./admin.js"></script>
   </body>
 </html>

@@ -19,13 +19,15 @@ service cloud.firestore {
         isAdmin()
         ||
         (
-          resource.data.validated == false
+          resource.data.validated != true
           && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
-            "validated",
-            "validatedAt",
-            "userAgent"
+            "status",
+            "guestName",
+            "reservedAt"
           ])
-          && request.resource.data.validated == true
+          && request.resource.data.status == "reserved"
+          && request.resource.data.guestName is string
+          && request.resource.data.guestName.size() <= 60
         )
       );
     }
