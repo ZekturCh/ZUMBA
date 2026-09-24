@@ -1,12 +1,16 @@
 :root {
   color-scheme: light;
-  --bg: #f5f2ea;
+  --bg: #fff8ed;
   --panel: #ffffff;
-  --ink: #201d1d;
-  --muted: #6f6661;
-  --line: #dfd7ca;
-  --accent: #d92d20;
-  --accent-dark: #a32018;
+  --ink: #171217;
+  --muted: #635750;
+  --line: #ead8bd;
+  --accent: #df2119;
+  --accent-dark: #970b0b;
+  --peru-red: #c90812;
+  --colombia-yellow: #ffd226;
+  --colombia-blue: #0647b8;
+  --colombia-red: #dd1f22;
   --success: #087443;
   --danger: #b42318;
 }
@@ -21,6 +25,35 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   color: var(--ink);
   background: var(--bg);
+}
+
+.ticket-page {
+  position: relative;
+  overflow-x: hidden;
+  background: #330303;
+}
+
+.ticket-page::before {
+  position: fixed;
+  inset: -18px;
+  z-index: -2;
+  content: "";
+  background:
+    linear-gradient(180deg, rgba(80, 0, 0, 0.2), rgba(80, 0, 0, 0.58)),
+    url("./assets/colombian-flow-masterclass.jpg") center / cover no-repeat;
+  filter: blur(7px);
+  opacity: 0.6;
+  transform: scale(1.04);
+}
+
+.ticket-page::after {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 210, 38, 0.28), transparent 28%),
+    linear-gradient(115deg, rgba(201, 8, 18, 0.54), rgba(6, 71, 184, 0.22) 52%, rgba(221, 31, 34, 0.48));
 }
 
 .shell,
@@ -41,7 +74,57 @@ body {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--panel);
-  box-shadow: 0 18px 60px rgba(32, 29, 29, 0.08);
+  box-shadow: 0 18px 60px rgba(32, 29, 29, 0.13);
+}
+
+.ticket-card {
+  overflow: hidden;
+  position: relative;
+  width: min(100%, 440px);
+  border: 1px solid rgba(255, 210, 38, 0.58);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+}
+
+.ticket-card::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 7px;
+  content: "";
+  background: linear-gradient(90deg, var(--peru-red), #ffffff 31%, var(--colombia-yellow) 50%, var(--colombia-blue) 70%, var(--colombia-red));
+}
+
+.event-brand {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.brand-zumba {
+  color: var(--peru-red);
+  font-size: 25px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.brand-flow {
+  color: #111111;
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow:
+    0 2px 0 var(--colombia-yellow),
+    0 4px 0 rgba(6, 71, 184, 0.32);
+}
+
+.brand-meta {
+  color: var(--accent-dark);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
 }
 
 .wide {
@@ -67,6 +150,11 @@ h1 {
   line-height: 1.15;
 }
 
+.ticket-card h1 {
+  margin-bottom: 12px;
+  text-align: center;
+}
+
 .code {
   margin: 0 0 18px;
   font-size: 42px;
@@ -79,6 +167,17 @@ h1 {
   place-items: center;
   min-height: 236px;
   margin: 12px 0 18px;
+}
+
+.ticket-card .qr {
+  min-height: 264px;
+  margin: 10px auto 14px;
+  border: 4px solid var(--colombia-yellow);
+  border-radius: 8px;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(135deg, var(--peru-red), var(--colombia-yellow), var(--colombia-blue), var(--colombia-red)) border-box;
+  box-shadow: 0 12px 28px rgba(151, 11, 11, 0.16);
 }
 
 .qr img,
@@ -119,7 +218,8 @@ h1 {
 .primary {
   width: 100%;
   color: #ffffff;
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--peru-red), var(--colombia-red));
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.16);
 }
 
 .compact {
@@ -128,7 +228,7 @@ h1 {
 }
 
 .primary:hover {
-  background: var(--accent-dark);
+  background: linear-gradient(135deg, var(--accent-dark), var(--colombia-red));
 }
 
 .secondary {
